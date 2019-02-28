@@ -1,0 +1,29 @@
+const sgMail = require('@sendgrid/mail');
+const config = require('./config');
+
+module.exports = function (context, input) {
+
+     var toEmails=[];
+    for (var result of input) {
+        if(result.deliveredNotified!="True" && result.delivered=="True")
+        {
+        result.deliveredNotified="True";
+       
+        toEmails.push(result.Email);
+        }
+    }
+
+    const msg = {
+        to: toEmails,
+        from: 'orders@productsshop.com',
+        subject: 'Your order is delivered!',
+        html:'<p>Good news!<br/>Your order is dilvered!</p><p>Thank you '+
+        'for using Products Shop!</p>',
+        };
+        sgMail.sendMultiple(msg);
+
+        
+    context.log('Document Id: ', input[0].id);
+
+    context.done();
+};

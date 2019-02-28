@@ -1,0 +1,14 @@
+{
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "name": "input",
+      "direction": "in",
+      "leaseCollectionName": "leases",
+      "connectionStringSetting": "ordersTrigger_ConnectionString",
+      "databaseName": "productsshop",
+      "collectionName": "orders",
+      "createLeaseCollectionIfNotExists": true
+    }
+  ]
+}

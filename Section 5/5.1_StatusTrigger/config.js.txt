@@ -1,0 +1,19 @@
+var config = {}
+config.SendGridAPIKey="SG.yMAwqI5aeT_I2EFytrg";
+config.endpoint = "https://productshop.documents.azure.com:443/";
+config.primaryKey = "KoJw9HvoBuXatuxEtfqfO4OK11DknortfvTQ==";
+
+config.database = {
+    "id": "productsshop"
+};
+
+config.database = {
+    "id": "productsshop"
+};
+
+config.ordersCollection= {
+    "id": "orders"
+};
+
+
+module.exports = config;

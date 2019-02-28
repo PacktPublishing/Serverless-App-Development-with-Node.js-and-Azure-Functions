@@ -1,0 +1,4 @@
+var config = {}
+config.SendGridAPIKey="SG.I5I8Nb8Z1EP3yMAwqI5aeT_I2EFytrg";
+
+module.exports = config;

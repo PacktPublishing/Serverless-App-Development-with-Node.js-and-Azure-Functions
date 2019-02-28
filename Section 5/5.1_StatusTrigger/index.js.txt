@@ -1,0 +1,44 @@
+const sgMail = require('@sendgrid/mail');
+const CosmosClient = require('@azure/cosmos').CosmosClient;
+const config = require('./config');
+sgMail.setApiKey(config.SendGridAPIKey);
+const url = require('url');
+const endpoint = config.endpoint;
+const masterKey = config.primaryKey;
+const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey },
+  consistencyLevel: "Session" });
+const databaseId = config.database.id;
+const ordersColl=config.ordersCollection.id;
+
+module.exports = async function (context, myTimer) {
+    var timeStamp = new Date().toISOString();
+     
+     results=await client.database(databaseId).container(ordersColl).
+     items.readAll().toArray();
+
+     var toEmails=[];
+    for (var queryResult of results.result) {
+        let resultString = JSON.stringify(queryResult);
+        console.log(resultString);
+        if(queryResult.shipped=="True" && queryResult.shippedNotified!="True")
+        {
+        queryResult.shippedNotified="True";
+        await client.database(databaseId).container("orders")
+        .item(queryResult.id).replace( queryResult);
+      
+        toEmails.push(queryResult.Email);
+        }
+    }
+
+
+     const msg = {
+        to: toEmails,
+        from: 'orders@productsshop.com',
+        subject: 'Your order is shipped!',
+        html:'<p>Good news!<br/>Your order is shipped and will be delivered in 2 business days!</p><p>Thank you '+
+        'for using Products Shop!</p>',
+        };
+        sgMail.sendMultiple(msg);
+  
+    context.log("Job ran successfully!");   
+};
