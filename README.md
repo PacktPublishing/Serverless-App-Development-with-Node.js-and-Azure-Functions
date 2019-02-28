@@ -22,7 +22,7 @@ By the end of the course, you will have built your own serverless application wi
 To fully benefit from the coverage included in this course, you will need:<br/>
 Prior knowledge of Node.js developers 
 ### Technical Requirements
-This course has the following software requirements:<br/>
+:<br/>
 For an optimal experience with hands-on labs and other practical activities, we recommend the following configuration:
 
 ●        OS: Windows
